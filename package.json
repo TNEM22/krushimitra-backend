@@ -28,6 +28,7 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^8.50.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.0.0",
@@ -37,8 +38,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.2",
     "nodemon": "^3.0.1",
-    "prettier": "^3.0.3",
-    "win-node-env": "^0.6.1"
+    "prettier": "^3.0.3"
   },
   "engines": {
     "node": ">=10.0.0"
