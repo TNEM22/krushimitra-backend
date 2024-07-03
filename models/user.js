@@ -25,9 +25,6 @@ const userSchema = new mongoose.Schema({
       message: 'User is either: farmer or expert',
     },
   },
-  exp: {
-    type: Number,
-  },
   password: {
     type: String,
     required: [true, 'A user must have a password'],
@@ -39,11 +36,26 @@ const userSchema = new mongoose.Schema({
     default: true,
     select: false,
   },
+  exp: {
+    type: Number,
+  },
+  hourlyRate: {
+    type: Number,
+  },
+  status: {
+    type: String,
+    default: 'Offline',
+  },
+  photo: {
+    type: String,
+    default: '/placeholder.svg',
+  },
 });
 
 userSchema.pre('validate', function (next) {
   if (this.role === 'expert' && (this.exp === null || this.exp === undefined)) {
     this.invalidate('exp', 'Experience is required for experts');
+    this.invalidate('hourlyRate', 'Hourly Rate is required for experts');
   }
   next();
 });
@@ -52,6 +64,9 @@ userSchema.pre('validate', function (next) {
 userSchema.pre('save', function (next) {
   if (this.role !== 'expert') {
     this.exp = undefined;
+    this.hourlyRate = undefined;
+    this.status = undefined;
+    this.photo = undefined;
   }
   next();
 });
