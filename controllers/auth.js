@@ -43,6 +43,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     role: req.body.role,
     exp: req.body.exp,
+    hourlyRate: req.body.hourlyRate,
   });
 
   createSendToken(newUser, 201, res);
