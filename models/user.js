@@ -50,6 +50,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '/placeholder.svg',
   },
+  farmerInvitations: [mongoose.Schema.Types.ObjectId],
 });
 
 userSchema.pre('validate', function (next) {
@@ -67,6 +68,7 @@ userSchema.pre('save', function (next) {
     this.hourlyRate = undefined;
     this.status = undefined;
     this.photo = undefined;
+    this.farmerInvitations = undefined;
   }
   next();
 });

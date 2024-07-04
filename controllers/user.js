@@ -14,6 +14,15 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getFarmer = catchAsync(async (req, res, next) => {
+  const users = await User.findById(req.params.id);
+
+  res.status(200).json({
+    status: 'success',
+    results: users,
+  });
+});
+
 exports.getExperts = catchAsync(async (req, res, next) => {
   const users = await User.find({ role: 'expert' });
 
@@ -38,6 +47,42 @@ exports.updateExpert = catchAsync(async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       results: users,
+    });
+  }
+});
+
+exports.appointExpert = catchAsync(async (req, res, next) => {
+  if (req.user.role === 'expert') {
+    res.status(400).json({
+      status: 'Bad Request',
+      results: 'Experts does not have this option',
+    });
+  } else {
+    await User.findByIdAndUpdate(req.body.id, {
+      $push: { farmerInvitations: req.user.id },
+    });
+
+    res.status(200).json({
+      status: 'success',
+      results: 'Appointment Booked',
+    });
+  }
+});
+
+exports.rejectExpert = catchAsync(async (req, res, next) => {
+  if (req.user.role === 'expert') {
+    res.status(400).json({
+      status: 'Bad Request',
+      results: 'Experts does not have this option',
+    });
+  } else {
+    await User.findByIdAndUpdate(req.body.id, {
+      $pull: { farmerInvitations: req.user.id },
+    });
+
+    res.status(200).json({
+      status: 'success',
+      results: 'Appointment Cancelled',
     });
   }
 });

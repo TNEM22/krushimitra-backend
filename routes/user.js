@@ -22,6 +22,13 @@ router
   .post(authController.protect, userController.updateExpert);
 
 router
+  .route('/experts/book')
+  .post(authController.protect, userController.appointExpert)
+  .delete(authController.protect, userController.rejectExpert);
+
+router.route('/farmer/:id').get(userController.getFarmer);
+
+router
   .route('/')
   .get(userController.getAllUsers)
   .post(userController.createUser);
