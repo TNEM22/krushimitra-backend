@@ -16,7 +16,10 @@ router.patch(
 
 router.delete('/deleteMe', authController.protect, userController.deleteMe);
 
-router.route('/experts').get(userController.getExperts);
+router
+  .route('/experts')
+  .get(userController.getExperts)
+  .post(authController.protect, userController.updateExpert);
 
 router
   .route('/')
